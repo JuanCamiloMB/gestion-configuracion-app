@@ -1,0 +1,45 @@
+.login{
+    border: 1px solid #fff;
+    border-radius: 5px;
+    padding: 60px;
+    width: 300px;
+    position: absolute;
+    top: 150px;
+    left: 45%;
+    margin-left: -150px;
+    background-color: #f0d1d1;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.formulario{
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;   
+    background-color: rgba(128, 128, 128, 0.219); 
+}
+.boton{
+    border-radius: 200px;
+    width: 60%;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    left: 50%;
+    margin-left: 64px;
+    background-color: #C51013;
+    color: white;
+}
+
+div{
+    margin: 32px auto;
+    width: 100%;
+    text-align: center;
+    
+}
+
+
+h2{
+    text-align: center;
+    color: #333;
+    
+}
