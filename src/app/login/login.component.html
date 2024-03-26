@@ -1,12 +1,12 @@
-<form action="" method="POST" class="login">
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" method="POST" class="login">
     <h2>Login</h2>
     <div>
         <label>Usuario<br></label>
-        <input class="formulario" id="Nombre_usuario" type="text"/>
+        <input class="formulario" id="Nombre_usuario" type="text" formControlName="usernameControl"/>
     </div>
     <div>
         <label>Contraseña<br></label>
-        <input class="formulario" id="contraseña" type="text"/>
+        <input class="formulario" id="contraseña" type="text" formControlName="passwordControl"/>
     </div>
   <input class="boton" type="submit" value="ingresar" />
 </form>
