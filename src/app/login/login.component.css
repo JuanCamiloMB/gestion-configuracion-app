@@ -3,9 +3,9 @@
     border-radius: 5px;
     padding: 60px;
     width: 300px;
-    position: absolute;
-    top: 150px;
     left: 45%;
+    top: 150px;
+    position: absolute;
     margin-left: -150px;
     background-color: #f0d1d1;
     font-family: Arial, Helvetica, sans-serif;
@@ -16,17 +16,17 @@
     padding: 10px;
     margin: 5px 0;
     box-sizing: border-box;   
-    background-color: rgba(128, 128, 128, 0.219); 
+    background-color: #D9D9D9; 
 }
 .boton{
-    border-radius: 200px;
+    background: #C51013;
+    border-radius: 50px;
     width: 60%;
     padding: 10px;
     margin: 5px 0;
     box-sizing: border-box;
     left: 50%;
     margin-left: 64px;
-    background-color: #C51013;
     color: white;
 }
 

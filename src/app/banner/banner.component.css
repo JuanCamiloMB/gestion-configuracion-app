@@ -1,0 +1,17 @@
+.banner{
+    background-color: #C51013;
+    padding: 5px;
+    display: flex;
+    align-items: center; /* Alinea los elementos hijos en el centro verticalmente */
+}
+
+h3{
+    color: #fff;
+    text-align: center;
+    flex: auto;
+}
+a {
+    margin: 8px; 
+    color: #fff;
+    
+}
