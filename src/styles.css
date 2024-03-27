@@ -3,5 +3,11 @@ body{
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
+    background-image: url('assets/IMG-20240123-WA0038-768x405.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    image-rendering: crisp-edges;
 }
 

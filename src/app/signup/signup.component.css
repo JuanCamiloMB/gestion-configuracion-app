@@ -1,0 +1,47 @@
+.register{
+    border: 1px solid #fff;
+    border-radius: 5px;
+    padding: 60px;
+    width: 300px;
+    left: 45%;
+    top: 150px;
+    position: absolute;
+    margin-left: -150px;
+    background-color: #ffffffc4;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.formulario{
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;   
+    background-color: #D9D9D9; 
+    border: 1px solid;
+}
+.boton{
+    background: #C51013;
+    border-radius: 50px;
+    width: 60%;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    left: 50%;
+    margin-left: 64px;
+    color: white;
+    font-weight: bold;
+}
+
+div{
+    margin: 32px auto;
+    width: 100%;
+    text-align: center;
+    
+}
+
+
+h2{
+    text-align: center;
+    color: #333;
+    
+}
