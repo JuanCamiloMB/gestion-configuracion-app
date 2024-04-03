@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "gestionconfig-bf25d": {
+      "hosting": {
+        "gestion-configuracion-app": [
+          "gestionconfig-bf25d"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "gestionconfig-bf25d"
+  }
+}
