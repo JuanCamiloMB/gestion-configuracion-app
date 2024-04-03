@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut,
 } from '@angular/fire/auth';
 
 @Injectable({
@@ -16,7 +17,7 @@ export class UserService {
     return await createUserWithEmailAndPassword(this._auth, email, password);
   }
 
-  async signIn(email: string, password:string){
+  async signIn(email: string, password: string) {
     try {
       const userCredential: UserCredential = await signInWithEmailAndPassword(
         this._auth,
@@ -32,31 +33,31 @@ export class UserService {
     }
   }
 
-  async getCurrentUser():Promise<boolean> {
+  async getCurrentUser(): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      const unsubscribe = onAuthStateChanged(this._auth, (user) => {
-        unsubscribe();
-        if(user){
-          resolve(true)
-        }else{
-          resolve(false)
-        }
-      },reject);
+      const unsubscribe = onAuthStateChanged(
+        this._auth,
+        (user) => {
+          unsubscribe();
+          if (user) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        },
+        reject
+      );
     });
+  }
 
-    // onAuthStateChanged(this._auth, (user) => {
-    //   if (user) {
-    //     // User is signed in, see docs for a list of available properties
-    //     // https://firebase.google.com/docs/reference/js/auth.user
-    //     const uid = user.uid;
-    //     console.log('here');
-    //     return true;
-    //     // ...
-    //   } else {
-    //     // User is signed out
-    //     // ...
-    //     return false;
-    //   }
-    // });
+  async signOut() {
+    signOut(this._auth)
+      .then(() => {
+        return true;
+      })
+      .catch((error) => {
+        console.error('Error signingOut ', error);
+        return false;
+      });
   }
 }

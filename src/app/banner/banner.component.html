@@ -3,6 +3,11 @@
         <img  src="../../assets/descarga.jpeg" alt="logo Udem">
     </div>
     <h3>UdemNotes</h3>
-    <a href="">Login</a>
-    <a href="signup">sign up</a>
+    @if (isLoggedIn()) {
+        <button>LogOut</button>
+    }@else {
+
+        <a href="">Login</a>
+        <a href="signup">Sign Up</a>
+    }
 </div>

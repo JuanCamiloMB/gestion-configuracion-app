@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-banner',
@@ -7,6 +8,12 @@ import { Component } from '@angular/core';
   templateUrl: './banner.component.html',
   styleUrl: './banner.component.css'
 })
-export class BannerComponent {
+export class BannerComponent implements OnInit {
+  constructor(private _userService:UserService){}
+  public isLoggedIn = signal(false)
+  async ngOnInit(): Promise<void> {
+      const currentUser = await this._userService.getCurrentUser();
+      this.isLoggedIn.update(value=>currentUser)
+  }
 
 }
