@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { doc, getFirestore, setDoc } from '@angular/fire/firestore';
 import { UserService } from '../services/user.service';
+import { FirestoreService } from '../services/firestore.service';
 
 @Component({
   selector: 'app-signup',
@@ -19,7 +20,7 @@ export class SignupComponent {
     emailControl: new FormControl(''),
   });
 
-  constructor(private _userService: UserService) {}
+  constructor(private _userService: UserService, private _firestoreService: FirestoreService) {}
 
   async SignUp(email: string, password: string) {
     try {
@@ -35,18 +36,6 @@ export class SignupComponent {
     }
   }
 
-  async addToFirestore(username: string, email: string) {
-    try {
-      const db = getFirestore();
-      const userRef = doc(db, 'users', `${username}`);
-      await setDoc(userRef, {
-        email: email,
-        username: username,
-      });
-    } catch (err) {
-      console.error('Error inserting to firestore ', err);
-    }
-  }
   async onSubmit() {
     const {
       emailControl: email,
@@ -55,8 +44,9 @@ export class SignupComponent {
     } = this.signUpForm.value;
     if (email && password && username) {
       const user = await this.SignUp(email, password);
-      if (user) {
-        await this.addToFirestore(username, email);
+      let userCreated = await this._firestoreService.createUserFolder(username);
+      if (user && userCreated) {
+        console.log(`user ${user.email} registered`)
       }
     } else {
       console.error('Por favor ingrese todos los datos');
