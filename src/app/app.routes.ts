@@ -5,26 +5,26 @@ import { NoteListComponent } from './note-list/note-list.component';
 import { NoteEditComponent } from './note-edit/note-edit.component';
 import { authguardGuard, logedIn } from './authguard.guard';
 
-
 export const routes: Routes = [
   {
     path: '',
     component: LoginComponent,
-    canActivate: [logedIn]
+    canActivate: [logedIn],
   },
   {
     path: 'signup',
     component: SignupComponent,
-    canActivate: [logedIn]
+    canActivate: [logedIn],
   },
   {
-    path: 'notelist',
+    path: 'notes',
     component: NoteListComponent,
-    canActivate:[authguardGuard]
-  },
-  {
-    path: 'noteedit',
-    component: NoteEditComponent,
-    canActivate: [authguardGuard]
+    canActivate: [authguardGuard],
+    children: [
+      {
+        path: ':id',
+        component: NoteEditComponent,
+      },
+    ],
   },
 ];

@@ -15,6 +15,7 @@ import { Subject } from 'rxjs';
 })
 export class UserService {
   public isLoggedIn: Subject<boolean> = new Subject<boolean>()
+  public userData: Subject<any> = new Subject<any>()
   constructor(private _auth: Auth, private router:Router) {}
   async signUp(email: string, password: string): Promise<UserCredential> {
     const userCredentials = await createUserWithEmailAndPassword(this._auth, email, password);
@@ -57,6 +58,16 @@ export class UserService {
         reject
       );
     });
+  }
+
+  async getUserData(){
+    onAuthStateChanged(this._auth,(user)=>{
+      if(user){
+        this.userData.next(user)
+      }else{
+        this.userData.next(null)
+      }
+    })
   }
 
   async signOut(): Promise<boolean> {

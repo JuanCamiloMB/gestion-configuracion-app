@@ -17,9 +17,12 @@ import { Note } from '../models/notes.model';
 })
 export class FirestoreService {
   constructor(private _firestore: Firestore) {}
-  async createUserFolder(username: string) {
+  async createUserFolder(username: string, email:string) {
     try {
-      await setDoc(doc(this._firestore, 'users', `${username}`), {});
+      await setDoc(doc(this._firestore, 'users', `${username}`), {
+        username: username,
+        email: email
+      });
       return true;
     } catch (err) {
       console.error('Error adding to firestore ', err);
