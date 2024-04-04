@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import {
-  UserCredential,
-  getAuth,
-  signInWithEmailAndPassword,
-} from '@angular/fire/auth';
 import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +26,6 @@ export class LoginComponent {
     const { emailControl: email, passwordControl: password } =
       this.loginForm.value;
     if (email && password) {
-      const auth = getAuth();
       const user = await this.signIn(email, password);
     } else {
       console.error('Por favor ingrese todos los datos');

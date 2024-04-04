@@ -12,3 +12,14 @@ export const authguardGuard: CanActivateFn = async(route, state) => {
   }
 
 };
+
+export const logedIn: CanActivateFn = async(route, state) => {
+  const userService = inject(UserService);
+  const userExist = await userService.getCurrentUser();
+  if(userExist){
+    return false
+  }else{
+    return true
+  }
+
+};

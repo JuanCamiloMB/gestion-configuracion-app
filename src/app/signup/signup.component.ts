@@ -46,7 +46,6 @@ export class SignupComponent {
       let userCreated = await this._firestoreService.createUserFolder(username);
       if (user && userCreated) {
         console.log(`user ${user.email} registered`)
-        this.router.navigate(['/notelist'])
       }
     } else {
       console.error('Por favor ingrese todos los datos');

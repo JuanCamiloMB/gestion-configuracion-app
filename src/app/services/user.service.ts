@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -14,10 +15,11 @@ import { Subject } from 'rxjs';
 })
 export class UserService {
   isLoggedIn: Subject<boolean> = new Subject<boolean>()
-  constructor(private _auth: Auth) {}
+  constructor(private _auth: Auth, private router:Router) {}
   async signUp(email: string, password: string): Promise<UserCredential> {
     const userCredentials = await createUserWithEmailAndPassword(this._auth, email, password);
     this.isLoggedIn.next(true)
+    this.router.navigate(['/notelist'])
     return userCredentials
   }
 
@@ -31,6 +33,7 @@ export class UserService {
       const user = userCredential.user;
       // console.log(user);
       this.isLoggedIn.next(true)
+      this.router.navigate(['/notelist'])
       return user;
     } catch (err) {
       console.error('Error login ', err);
@@ -61,6 +64,7 @@ export class UserService {
     try {
       await signOut(this._auth);
       this.isLoggedIn.next(false)
+      this.router.navigate(['/'])
       return true;
     } catch (err) {
       console.error('Error signing out ', err);
