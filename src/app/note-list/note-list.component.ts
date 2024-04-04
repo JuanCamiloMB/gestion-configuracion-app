@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { FirestoreService } from '../services/firestore.service';
 
@@ -14,16 +14,41 @@ export class NoteListComponent {
   noteList: any;
   userData: any;
   constructor(
-    private activatedRoute: ActivatedRoute,
     private _userService: UserService,
-    private _firestoreService: FirestoreService
-  ) {
-    this._userService.getUserData();
-    this.userData = this._userService.userData;
+    private _firestoreService: FirestoreService,
+    private router: Router
+  ) { 
+    this.getUserInfo()
   }
 
-  getNotes() {
+  async getUserInfo(){
+    const user =  this._userService.getUser()
+    console.log(user?.email)
+    if(user !== null && user?.email!==null){
+      this.userData = await this._firestoreService.getUserByEmail(user.email)
+      this.getNotes();
+      // console.log(this.userData)
+    }
+  }
+
+  async getNotes() {
     const username = this.userData.username;
-    this.noteList = this._firestoreService.getNotes(username);
+    this.noteList = await this._firestoreService.getNotes(username);
+    console.log(this.noteList)
+  }
+
+  async newNote(){
+    if(this.userData.username!== undefined){
+
+      const newNoteId = await this._firestoreService.createNote(this.userData.username,{
+        title: 'Titulo',
+        content: ''
+      })
+      if(newNoteId){
+        this.router.navigate([`/notes/${newNoteId}`])
+      }
+    }else{
+      console.error('No username in userData')
+    }
   }
 }

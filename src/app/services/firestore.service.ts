@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
+  DocumentData,
   Firestore,
   addDoc,
   collection,
@@ -7,10 +8,14 @@ import {
   doc,
   getDoc,
   getDocs,
+  query,
   setDoc,
   updateDoc,
+  where,
 } from '@angular/fire/firestore';
 import { Note } from '../models/notes.model';
+import { User } from '@angular/fire/auth';
+
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +35,25 @@ export class FirestoreService {
     }
   }
 
+  async getUserByEmail(email:string){
+    try{
+      const usersRef = collection(this._firestore, 'users');
+      const q = query(usersRef, where('email', '==', email));
+      const querySnapshot = await getDocs(q);
+      let user!:DocumentData;
+      querySnapshot.forEach((doc)=>{
+        console.log(doc.data())
+        user = doc.data()
+      }
+      )
+      // console.log(user)
+      return user;
+    }catch(err){
+      console.error('Error fetching by email ',err)
+      return
+    }
+  }
+
   async createNote(username: string, note: Note) {
     try {
       const notesRef = collection(
@@ -40,8 +64,10 @@ export class FirestoreService {
       );
       const docRef = await addDoc(notesRef, note); //docRef.id
       console.log('Document written with ID: ', docRef.id);
+      return docRef.id
     } catch (err) {
       console.error('Error adding document ', err);
+      return
     }
   }
 
