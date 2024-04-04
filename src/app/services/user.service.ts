@@ -1,6 +1,7 @@
-import { Injectable, WritableSignal, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   Auth,
+  User,
   UserCredential,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -14,14 +15,18 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
-  public isLoggedIn: Subject<boolean> = new Subject<boolean>()
-  public userData: Subject<any> = new Subject<any>()
-  constructor(private _auth: Auth, private router:Router) {}
+  public isLoggedIn: Subject<boolean> = new Subject<boolean>();
+  constructor(private _auth: Auth, private router: Router) {}
+
   async signUp(email: string, password: string): Promise<UserCredential> {
-    const userCredentials = await createUserWithEmailAndPassword(this._auth, email, password);
-    this.isLoggedIn.next(true)
-    this.router.navigate(['/notelist'])
-    return userCredentials
+    const userCredentials = await createUserWithEmailAndPassword(
+      this._auth,
+      email,
+      password
+    );
+    this.isLoggedIn.next(true);
+    this.router.navigate(['/notes']);
+    return userCredentials;
   }
 
   async signIn(email: string, password: string) {
@@ -32,8 +37,8 @@ export class UserService {
         password
       );
       const user = userCredential.user;
-      this.isLoggedIn.next(true)
-      this.router.navigate(['/notelist'])
+      this.isLoggedIn.next(true);
+      this.router.navigate(['/notes']);
       return user;
     } catch (err) {
       console.error('Error login ', err);
@@ -48,10 +53,10 @@ export class UserService {
         (user) => {
           unsubscribe();
           if (user) {
-            this.isLoggedIn.next(true)
+            this.isLoggedIn.next(true);
             resolve(true);
           } else {
-            this.isLoggedIn.next(false)
+            this.isLoggedIn.next(false);
             resolve(false);
           }
         },
@@ -60,21 +65,21 @@ export class UserService {
     });
   }
 
-  async getUserData(){
-    onAuthStateChanged(this._auth,(user)=>{
-      if(user){
-        this.userData.next(user)
-      }else{
-        this.userData.next(null)
-      }
-    })
+  getUser():User|null {
+    const user = this._auth.currentUser;
+    if (user) {
+      return user;
+    }else{
+
+      return null
+    }
   }
 
   async signOut(): Promise<boolean> {
     try {
       await signOut(this._auth);
-      this.isLoggedIn.next(false)
-      this.router.navigate(['/'])
+      this.isLoggedIn.next(false);
+      this.router.navigate(['/']);
       return true;
     } catch (err) {
       console.error('Error signing out ', err);

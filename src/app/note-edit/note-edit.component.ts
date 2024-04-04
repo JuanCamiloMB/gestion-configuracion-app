@@ -22,9 +22,9 @@ export class NoteEditComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.noteId = this.activatedRoute.snapshot.paramMap.get('id');
-    this._userService.getUserData();
-    this.userData = this._userService.userData;
-    this.getNote();
+    // this._userService.getUserData();
+    // this.userData = this._userService.userData;
+    // this.getNote();
   }
 
   async getNote(){
