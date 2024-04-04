@@ -43,7 +43,7 @@ export class SignupComponent {
     } = this.signUpForm.value;
     if (email && password && username) {
       const user = await this.SignUp(email, password);
-      let userCreated = await this._firestoreService.createUserFolder(username);
+      let userCreated = await this._firestoreService.createUserFolder(username, email);
       if (user && userCreated) {
         console.log(`user ${user.email} registered`)
       }
