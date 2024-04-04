@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, WritableSignal, signal } from '@angular/core';
 import {
   Auth,
   UserCredential,
@@ -7,14 +7,18 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from '@angular/fire/auth';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+  isLoggedIn: Subject<boolean> = new Subject<boolean>()
   constructor(private _auth: Auth) {}
   async signUp(email: string, password: string): Promise<UserCredential> {
-    return await createUserWithEmailAndPassword(this._auth, email, password);
+    const userCredentials = await createUserWithEmailAndPassword(this._auth, email, password);
+    this.isLoggedIn.next(true)
+    return userCredentials
   }
 
   async signIn(email: string, password: string) {
@@ -26,6 +30,7 @@ export class UserService {
       );
       const user = userCredential.user;
       // console.log(user);
+      this.isLoggedIn.next(true)
       return user;
     } catch (err) {
       console.error('Error login ', err);
@@ -40,8 +45,10 @@ export class UserService {
         (user) => {
           unsubscribe();
           if (user) {
+            this.isLoggedIn.next(true)
             resolve(true);
           } else {
+            this.isLoggedIn.next(false)
             resolve(false);
           }
         },
@@ -50,14 +57,14 @@ export class UserService {
     });
   }
 
-  async signOut() {
-    signOut(this._auth)
-      .then(() => {
-        return true;
-      })
-      .catch((error) => {
-        console.error('Error signingOut ', error);
-        return false;
-      });
+  async signOut(): Promise<boolean> {
+    try {
+      await signOut(this._auth);
+      this.isLoggedIn.next(false)
+      return true;
+    } catch (err) {
+      console.error('Error signing out ', err);
+      return false;
+    }
   }
 }

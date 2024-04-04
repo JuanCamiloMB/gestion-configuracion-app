@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
-
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-
-import { doc, getFirestore, setDoc } from '@angular/fire/firestore';
 import { UserService } from '../services/user.service';
 import { FirestoreService } from '../services/firestore.service';
+import { Router } from '@angular/router';
+import { BannerComponent } from '../banner/banner.component';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, BannerComponent],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
 })
@@ -20,7 +19,7 @@ export class SignupComponent {
     emailControl: new FormControl(''),
   });
 
-  constructor(private _userService: UserService, private _firestoreService: FirestoreService) {}
+  constructor(private _userService: UserService, private _firestoreService: FirestoreService, private router:Router) {}
 
   async SignUp(email: string, password: string) {
     try {
@@ -47,6 +46,7 @@ export class SignupComponent {
       let userCreated = await this._firestoreService.createUserFolder(username);
       if (user && userCreated) {
         console.log(`user ${user.email} registered`)
+        this.router.navigate(['/notelist'])
       }
     } else {
       console.error('Por favor ingrese todos los datos');
