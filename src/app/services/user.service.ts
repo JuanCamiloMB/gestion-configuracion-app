@@ -14,7 +14,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
-  private isLoggedIn: Subject<boolean> = new Subject<boolean>()
+  public isLoggedIn: Subject<boolean> = new Subject<boolean>()
   constructor(private _auth: Auth, private router:Router) {}
   async signUp(email: string, password: string): Promise<UserCredential> {
     const userCredentials = await createUserWithEmailAndPassword(this._auth, email, password);
