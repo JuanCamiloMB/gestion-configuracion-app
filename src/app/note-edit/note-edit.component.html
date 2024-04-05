@@ -1,1 +1,5 @@
-<p>note-edit works!</p>
+<div class="flex flex-col">
+    <button (click)="saveNote()" class="bg-red-500 p-9">Guardar</button>
+  <input [defaultValue]="title()" class="text-7xl" (input)="handleChangeTitle($event)"/>
+  <textarea  class="flex items-start justify-start min-h-screen" [defaultValue]="content()" (input)="handleChangeContent($event)"></textarea>
+</div>
