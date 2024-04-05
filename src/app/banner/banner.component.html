@@ -4,7 +4,7 @@
     </div>
     <h3>UdemNotes</h3>
     @if (isLoggedIn) {
-        <button (click)="signOut()">LogOut</button>
+        <a href (click)="signOut()">LogOut</a>
     }@else {
         <a href="">Login</a>
         <a href="signup">Sign Up</a>

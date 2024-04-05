@@ -1,0 +1,37 @@
+  .banner .logout {
+    font-size: 16px;
+    text-decoration: none;
+    color: white;
+  }
+
+  .boton-add-nota {
+    background-color: #C51013;
+    color: #ffffff;
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px;
+  }
+
+  .nota {
+    background-color: #dddddd;
+    color: #000000;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+  }
+  
+  .nota .titulo {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .nota .contenido {
+    font-size: 16px;
+  }
+    
+  
