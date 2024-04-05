@@ -1,8 +1,10 @@
-<h1>Lista de notas</h1>
+<div class="banner"></div>
+
+<button class="boton-add-nota" (click)="newNote()">+</button>
+
 @for (note of noteList; track $index) {
-<div (click)="goTo(note.id)">
-  <h2>{{ note.title }}</h2>
+<div class="nota hover:cursor-pointer" (click)="goTo(note.id)">
+  <div class="titulo">{{ note.title }}</div>
+  <div class="contenido">{{ note.content }}</div>
 </div>
 }
-
-<button (click)="newNote()">New note +</button>

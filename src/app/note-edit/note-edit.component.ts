@@ -1,5 +1,5 @@
 import { Component, OnInit, WritableSignal, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { FirestoreService } from '../services/firestore.service';
 
@@ -19,7 +19,8 @@ export class NoteEditComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private _userService: UserService,
-    private _firestoreService: FirestoreService
+    private _firestoreService: FirestoreService,
+    private router: Router
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -59,5 +60,10 @@ export class NoteEditComponent implements OnInit {
     note['title'] = this.title()
     note['content'] = this.content()
     this._firestoreService.updateNote(this.userData.username, note)
+  }
+
+  goBack(){
+    this.saveNote()
+    this.router.navigate(['/notes'])
   }
 }
