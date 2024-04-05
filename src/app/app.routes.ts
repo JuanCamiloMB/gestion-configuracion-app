@@ -19,12 +19,11 @@ export const routes: Routes = [
   {
     path: 'notes',
     component: NoteListComponent,
+    canActivate: [authguardGuard], 
+  },
+  {
+    path: 'notes/:id',
+    component: NoteEditComponent,
     canActivate: [authguardGuard],
-    children: [
-      {
-        path: ':id',
-        component: NoteEditComponent,
-      },
-    ],
   },
 ];

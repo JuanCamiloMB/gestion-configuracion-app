@@ -1,3 +1,6 @@
-<p>note-list works!</p>
+<h1>Lista de notas</h1>
+@for (note of noteList; track $index) {
+    <h2>{{note.title}}</h2>
+}
 
 <button (click)="newNote()">New note +</button>

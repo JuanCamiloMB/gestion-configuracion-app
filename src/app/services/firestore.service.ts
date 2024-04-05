@@ -72,6 +72,7 @@ export class FirestoreService {
   }
 
   async updateNote(username: string, note: Note) {
+    console.log(note)
     try {
       const docRef = doc(
         this._firestore,

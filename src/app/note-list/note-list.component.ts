@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Route, Router, RouterLink } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { FirestoreService } from '../services/firestore.service';
 
 @Component({
   selector: 'app-note-list',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './note-list.component.html',
   styleUrl: './note-list.component.css',
 })
@@ -23,11 +23,9 @@ export class NoteListComponent {
 
   async getUserInfo(){
     const user =  this._userService.getUser()
-    console.log(user?.email)
     if(user !== null && user?.email!==null){
       this.userData = await this._firestoreService.getUserByEmail(user.email)
       this.getNotes();
-      // console.log(this.userData)
     }
   }
 
@@ -50,5 +48,9 @@ export class NoteListComponent {
     }else{
       console.error('No username in userData')
     }
+  }
+
+  goTo(noteId:string){
+    this.router.navigate([`/notes/${noteId}`])
   }
 }
