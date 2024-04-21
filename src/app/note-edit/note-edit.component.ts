@@ -61,6 +61,10 @@ export class NoteEditComponent implements OnInit {
     note['content'] = this.content()
     this._firestoreService.updateNote(this.userData.username, note)
   }
+  deleteNote(){
+    this._firestoreService.deleteNote(this.userData.username, this.noteId)
+    this.router.navigate(['/notes'])
+  }
 
   goBack(){
     this.saveNote()
