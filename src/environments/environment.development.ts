@@ -5,6 +5,6 @@ export const environment = {
         projectId: "gestionconfig-bf25d",
         storageBucket: "gestionconfig-bf25d.appspot.com",
         messagingSenderId: "894661858855",
-        appId: "1:894661858855:web:0cb621878a5a14d5aaa002"
+        appId: "1:894661858855:web:9b4fbc63e1b88850aaa002"
       }
 };
