@@ -15,5 +15,9 @@
       [defaultValue]="content()"
       (input)="handleChangeContent($event)"
     ></textarea>
+    <div>
+      Número de caracteres en el contenido: {{ contentLength() }}
+    </div>
   </div>
 </div>
+

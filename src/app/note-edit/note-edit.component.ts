@@ -8,14 +8,15 @@ import { FirestoreService } from '../services/firestore.service';
   standalone: true,
   imports: [],
   templateUrl: './note-edit.component.html',
-  styleUrl: './note-edit.component.css',
+  styleUrls: ['./note-edit.component.css'],
 })
 export class NoteEditComponent implements OnInit {
   noteId: any;
   userData: any;
   noteData?: any;
-  title:WritableSignal<string> = signal('')
-  content:WritableSignal<string> = signal('')
+  title: WritableSignal<string> = signal('');
+  content: WritableSignal<string> = signal('');
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private _userService: UserService,
@@ -25,49 +26,56 @@ export class NoteEditComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.noteId = this.activatedRoute.snapshot.paramMap.get('id');
-    this.getUserInfo()
+    this.getUserInfo();
   }
 
-  async getUserInfo(){
-    const user =  this._userService.getUser()
-    if(user !== null && user?.email!==null){
-      this.userData = await this._firestoreService.getUserByEmail(user.email)
+  async getUserInfo() {
+    const user = this._userService.getUser();
+    if (user !== null && user?.email !== null) {
+      this.userData = await this._firestoreService.getUserByEmail(user.email);
       this.getNote();
     }
   }
 
-  async getNote(){
+  async getNote() {
     const username = this.userData.username;
-    this.noteData = await this._firestoreService.getNote(username, this.noteId)
+    this.noteData = await this._firestoreService.getNote(username, this.noteId);
     //
-    this.title.set(this.noteData.title)
-    this.content.set(this.noteData.content)
+    this.title.set(this.noteData.title);
+    this.content.set(this.noteData.content);
   }
 
-  handleChangeContent(event:any){
+  handleChangeContent(event: any) {
     this.content.set(event.target.value);
   }
 
-  handleChangeTitle(event:any){
+  handleChangeTitle(event: any) {
     this.title.set(event.target.value);
   }
 
-  saveNote(){
-    const note ={
-      ...this.noteData
-    }
-    note['id'] = this.noteId
-    note['title'] = this.title()
-    note['content'] = this.content()
-    this._firestoreService.updateNote(this.userData.username, note)
-  }
-  deleteNote(){
-    this._firestoreService.deleteNote(this.userData.username, this.noteId)
-    this.router.navigate(['/notes'])
+  saveNote() {
+    const note = {
+      ...this.noteData,
+      id: this.noteId,
+      title: this.title(),
+      content: this.content(),
+    };
+    this._firestoreService.updateNote(this.userData.username, note);
   }
 
-  goBack(){
-    this.saveNote()
-    this.router.navigate(['/notes'])
+  deleteNote() {
+    this._firestoreService.deleteNote(this.userData.username, this.noteId);
+    this.router.navigate(['/notes']);
+  }
+
+  goBack() {
+    this.saveNote();
+    this.router.navigate(['/notes']);
+  }
+
+  // Método para obtener la longitud del contenido
+  contentLength(): number {
+    return this.content().length;
   }
 }
+
